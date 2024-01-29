@@ -25,17 +25,17 @@ public class ProductController {
     }
 
     @PostMapping
-    public void createProduct(final ProductDto productDto) {
+    public void createProduct(@RequestBody final ProductDto productDto) {
         System.out.println("Creating product");
     }
 
     @PutMapping
-    public ProductDto updateProduct(final ProductDto productDto) {
+    public ProductDto updateProduct(@RequestBody final ProductDto productDto) {
         return new ProductDto(2L, "Zaktualizowany koc", "Cieplejszy koc", 12.99);
     }
 
-    @DeleteMapping
-    public void deleteProduct(final Long productId) {
+    @DeleteMapping(value = "{productId}")
+    public void deleteProduct(@PathVariable final Long productId) {
         System.out.println("Deleteing product");
     }
 }
