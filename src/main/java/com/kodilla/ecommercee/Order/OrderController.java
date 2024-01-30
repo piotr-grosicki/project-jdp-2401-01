@@ -19,23 +19,19 @@ public class OrderController {
     }
     @GetMapping(value = "{orderId}")
     public OrderTestDTO getOrder(@PathVariable int orderId){
-        List<OrderTestDTO> orders = new ArrayList<>();
-        orders.add(new OrderTestDTO(1,"order1"));
-        orders.add(new OrderTestDTO(2,"order2"));
-        orders.add(new OrderTestDTO(3,"order3"));
-        return orders.get(orderId-1);
+        return new OrderTestDTO(1,"user");
     }
     @DeleteMapping(value = "{orderId}")
-    public String deleteOrder(@PathVariable Long orderId){
-        return ("task " +orderId + " deleted");
+    public void deleteOrder(@PathVariable Long orderId){
+        System.out.println("Delete order");
     }
     @PutMapping
     public OrderTestDTO updateOrder(){
         return new OrderTestDTO(4,"updated order");
     }
     @PostMapping
-    public String createOrder(){
-        return "order created";
+    public void createOrder(@RequestBody OrderTestDTO orderTestDTO){
+        System.out.println("Create order");
     }
 
 }
