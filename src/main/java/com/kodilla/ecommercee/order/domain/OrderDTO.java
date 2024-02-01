@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class OrderTestDTO {
+public class OrderDTO {
     private int orderId;
     private String userName;
 }
