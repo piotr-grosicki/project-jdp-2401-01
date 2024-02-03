@@ -19,7 +19,7 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotNull
-    @Column(name = "D", unique = true)
+    @Column(name = "ID", unique = true)
     private Long orderId;
     @NotNull
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
