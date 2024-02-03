@@ -13,17 +13,20 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "PRODUCTGROUPS")
+@Entity(name = "PRODUCT_GROUPS")
 public class ProductGroups {
     @Id
     @GeneratedValue
     @NotNull
-    @Column(name = "ID", unique = true)
+    @Column(name = "PRODUCT_GROUP_ID", unique = true)
     private Long id;
-    @Column(name = "NAME")
+
+    @Column(name = "PRODUCT_GROUP_NAME")
     private String name;
-    @Column(name = "DESCRIPTION")
+
+    @Column(name = "PRODUCT_GROUP_DESCRIPTION")
     private String description;
+
     @OneToMany(
             targetEntity = Product.class,
             mappedBy = "productGroups",
