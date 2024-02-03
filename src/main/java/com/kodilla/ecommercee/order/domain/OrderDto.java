@@ -2,10 +2,12 @@ package com.kodilla.ecommercee.order.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @AllArgsConstructor
-public class OrderDTO {
+@NoArgsConstructor
+public class OrderDto {
     private int orderId;
     private String userName;
 }
