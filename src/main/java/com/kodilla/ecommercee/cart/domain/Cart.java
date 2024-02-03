@@ -1,6 +1,5 @@
 package com.kodilla.ecommercee.cart.domain;
 
-import com.kodilla.ecommercee.order.domain.Order;
 import com.kodilla.ecommercee.product.domain.Product;
 import com.kodilla.ecommercee.user.domain.User;
 import lombok.AllArgsConstructor;
@@ -33,7 +32,4 @@ public class Cart {
             inverseJoinColumns = {@JoinColumn(name = "PRODUCT_ID", referencedColumnName = "ID")}
     )
     private List<Product> products = new ArrayList<>();
-    @ManyToOne
-    @JoinColumn(name = "USER_ID")
-    private User user;
 }
