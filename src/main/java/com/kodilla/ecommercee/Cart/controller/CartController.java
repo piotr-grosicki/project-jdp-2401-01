@@ -1,7 +1,7 @@
 package com.kodilla.ecommercee.Cart.controller;
 
 import com.kodilla.ecommercee.Cart.domain.CartTestDto;
-import com.kodilla.ecommercee.order.domain.OrderDTO;
+import com.kodilla.ecommercee.order.domain.OrderDto;
 import com.kodilla.ecommercee.product.domain.ProductDto;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +27,7 @@ public class CartController {
         return new CartTestDto(1,"username",new ArrayList<>());
     }
     @PostMapping("/order/{cartId}")
-    public OrderDTO createOrderFromCart(@PathVariable int cartId){
-        return new OrderDTO(cartId, "username");
+    public OrderDto createOrderFromCart(@PathVariable int cartId){
+        return new OrderDto(cartId, "username");
     }
 }
