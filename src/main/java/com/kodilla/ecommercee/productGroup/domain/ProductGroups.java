@@ -20,10 +20,13 @@ public class ProductGroups {
     @NotNull
     @Column(name = "ID", unique = true)
     private Long id;
+
     @Column(name = "NAME")
     private String name;
+
     @Column(name = "DESCRIPTION")
     private String description;
+
     @OneToMany(
             targetEntity = Product.class,
             mappedBy = "productGroups",
