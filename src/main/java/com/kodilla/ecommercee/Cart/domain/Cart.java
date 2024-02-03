@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@Entity
+@Entity(name = "CART")
 public class Cart {
     @Id
     @NotNull
