@@ -3,6 +3,7 @@ package com.kodilla.ecommercee.cart.domain;
 import com.kodilla.ecommercee.product.domain.Product;
 import com.kodilla.ecommercee.user.domain.User;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -13,16 +14,15 @@ import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Getter
 @Entity(name = "CART")
 public class Cart {
     @Id
-    @NotNull
     @GeneratedValue
     @Column(name = "ID")
     private Long cartId;
     @ManyToOne
-    @NotNull
     @JoinColumn(name = "USER_ID")
     private User user;
     @ManyToMany(cascade = CascadeType.ALL)
