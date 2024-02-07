@@ -29,6 +29,6 @@ public class Product {
     private String name;
     @Column(name = "PRICE")
     private BigDecimal price;
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "products")
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "products", fetch = FetchType.EAGER)
     private List<Cart> carts = new ArrayList<>();
 }

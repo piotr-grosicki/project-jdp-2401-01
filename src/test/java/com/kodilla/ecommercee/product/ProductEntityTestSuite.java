@@ -52,6 +52,9 @@ public class ProductEntityTestSuite {
         assertEquals(3, testList.size());
         assertEquals("test product1", testList.get(0).getName());
         assertEquals(new BigDecimal("13.00"), testList.get(2).getPrice());
+
+        //CleanUp
+        productRepository.deleteAll();
     }
 
     @Test
@@ -65,6 +68,9 @@ public class ProductEntityTestSuite {
 
         //Then
         assertNotEquals(0L, (long) product1.getProductId());
+
+        //CleanUp
+        productRepository.deleteAll();
     }
 
     @Test
@@ -80,6 +86,9 @@ public class ProductEntityTestSuite {
         //Then
         assertTrue(optionalProduct.isPresent());
         assertEquals("test product1", optionalProduct.map(Product::getName).orElse(null));
+
+        //CleanUp
+        productRepository.deleteAll();
     }
 
     @Test
@@ -95,6 +104,9 @@ public class ProductEntityTestSuite {
 
         //Then
         assertFalse(optionalProduct.isPresent());
+
+        //CleanUp
+        productRepository.deleteAll();
     }
 
     @Test
@@ -111,6 +123,9 @@ public class ProductEntityTestSuite {
 
         //Then
         assertEquals(new BigDecimal("55.99"), optionalProduct.map(Product::getPrice).orElse(null));
+
+        //CleanUp
+        productRepository.deleteAll();
     }
 
     @Test
