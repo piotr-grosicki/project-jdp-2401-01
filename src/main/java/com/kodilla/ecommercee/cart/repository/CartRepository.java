@@ -13,5 +13,7 @@ import java.util.List;
 public interface CartRepository extends CrudRepository<Cart, Long> {
     List<Product> findAllByCartId(Long cartId);
     @Override
+    List<Cart> findAll();
+    @Override
     Cart save(Cart cart);
 }

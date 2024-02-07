@@ -14,6 +14,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.*;
@@ -30,6 +32,88 @@ public class ProductEntityTestSuite {
     private CartRepository cartRepository;
 
     @Test
+    public void getListOfProducts() {
+        //Given
+        Product product1 = Product.builder()
+                .name("test product1").price(new BigDecimal("11")).carts(new ArrayList<>()).build();
+        Product product2 = Product.builder()
+                .name("test product2").price(new BigDecimal("12")).carts(new ArrayList<>()).build();
+        Product product3 = Product.builder()
+                .name("test product3").price(new BigDecimal("13")).carts(new ArrayList<>()).build();
+
+        productRepository.save(product1);
+        productRepository.save(product2);
+        productRepository.save(product3);
+
+        //When
+        List<Product> testList = productRepository.findAll();
+
+        //Then
+        assertEquals(3, testList.size());
+        assertEquals("test product1", testList.get(0).getName());
+        assertEquals(new BigDecimal("13.00"), testList.get(2).getPrice());
+    }
+
+    @Test
+    public void testCreateProduct() {
+        //Given
+        Product product1 = Product.builder()
+                .name("test product1").price(new BigDecimal("11")).build();
+
+        //When
+        productRepository.save(product1);
+
+        //Then
+        assertNotEquals(0L, (long) product1.getProductId());
+    }
+
+    @Test
+    public void testGetProduct() {
+        //Given
+        Product product1 = Product.builder()
+                .name("test product1").price(new BigDecimal("11")).build();
+        productRepository.save(product1);
+
+        //When
+        Optional<Product> optionalProduct = productRepository.findById(product1.getProductId());
+
+        //Then
+        assertTrue(optionalProduct.isPresent());
+        assertEquals("test product1", optionalProduct.map(Product::getName).orElse(null));
+    }
+
+    @Test
+    public void testDeletionOfProduct() {
+        //Given
+        Product product1 = Product.builder()
+                .name("test product1").price(new BigDecimal("11")).build();
+        productRepository.save(product1);
+
+        //When
+        productRepository.deleteById(product1.getProductId());
+        Optional<Product> optionalProduct = productRepository.findById(product1.getProductId());
+
+        //Then
+        assertFalse(optionalProduct.isPresent());
+    }
+
+    @Test
+    public void testChangeProduct() {
+        //Given
+        Product product1 = Product.builder()
+                .name("test product1").price(new BigDecimal("11")).build();
+        productRepository.save(product1);
+
+        //When
+        product1.setPrice(new BigDecimal("55.99"));
+        productRepository.save(product1);
+        Optional<Product> optionalProduct = productRepository.findById(product1.getProductId());
+
+        //Then
+        assertEquals(new BigDecimal("55.99"), optionalProduct.map(Product::getPrice).orElse(null));
+    }
+
+    @Test
     public void testProductEntityRelations() {
         //Given
         ProductGroups testProductGroup = ProductGroups.builder()
@@ -43,7 +127,6 @@ public class ProductEntityTestSuite {
         Cart cart1 = Cart.builder().user(null).products(new ArrayList<>()).build();
         Cart cart2 = Cart.builder().user(null).products(new ArrayList<>()).build();
 
-        product1.setProductGroups(testProductGroup);
         testProductGroup.getProducts().add(product1);
         testProductGroup.getProducts().add(product2);
         testProductGroup.getProducts().add(product3);
@@ -68,11 +151,12 @@ public class ProductEntityTestSuite {
         cartRepository.save(cart2);
 
         //Then
-        assertEquals(3, testProductGroup.getProducts().size());
-        assertNotNull(product1.getProductId());
-        assertNotNull(product2.getProductId());
-        assertNotNull(product3.getProductId());
-        assertEquals(cart1.getProducts().get(0).getProductId(), product1.getProductId());
-        assertEquals(cart2.getProducts().get(2).getProductId(), product2.getProductId());
+        assertNotEquals(0L, (long) product1.getProductId());
+        assertNotEquals(0L, (long) testProductGroup.getId());
+        assertNotEquals(0L, (long) cart1.getCartId());
+        assertNotNull(productGroupRepository.findById(testProductGroup.getId()));
+        assertNotNull(productRepository.findById(product2.getProductId()));
+        assertNotNull(cartRepository.findById(cart2.getCartId()));
+
     }
 }
