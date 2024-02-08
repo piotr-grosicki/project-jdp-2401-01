@@ -1,6 +1,7 @@
 package com.kodilla.ecommercee.productGroup.domain;
 
 import com.kodilla.ecommercee.product.domain.Product;
+
 import lombok.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -11,15 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@Builder
-@Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Entity(name = "PRODUCT_GROUPS")
 public class ProductGroups {
     @Id
     @GeneratedValue
-    @NotNull
     @Column(name = "PRODUCT_GROUP_ID", unique = true)
     private Long id;
 
