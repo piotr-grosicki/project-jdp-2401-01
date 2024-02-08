@@ -2,6 +2,8 @@ package com.kodilla.ecommercee.productGroup.domain;
 
 import com.kodilla.ecommercee.product.domain.Product;
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -33,5 +35,6 @@ public class ProductGroups {
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY
     )
+    @Fetch(FetchMode.JOIN)
     private List<Product> products =new ArrayList<>();
 }

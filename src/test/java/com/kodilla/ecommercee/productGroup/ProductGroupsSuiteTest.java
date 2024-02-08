@@ -10,10 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-
 import java.math.BigDecimal;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,8 +27,6 @@ public class ProductGroupsSuiteTest {
 
     @Test
     public void testSaveProductGroup(){
-        assertNotNull(productGroupRepository, "ProductGroupRepository is null"); // Dodaj tę linię
-
         //Given
         ProductGroups group = ProductGroups.builder()
                 .name("Test Group")
@@ -86,11 +81,12 @@ public class ProductGroupsSuiteTest {
 
         //When
         productGroupRepository.deleteById(savedGroup.getId());
+        Optional<ProductGroups> retrievedGroup = productGroupRepository.findById(savedGroup.getId());
 
         //Then
-        Optional<ProductGroups> retrievedGroup = productGroupRepository.findById(savedGroup.getId());
         assertFalse(retrievedGroup.isPresent());
     }
+
     @Test
     public void testGetAllProductGroups(){
         //Given
@@ -98,10 +94,12 @@ public class ProductGroupsSuiteTest {
                 .name("Test Group1")
                 .description("Test Description1")
                 .build();
+
         ProductGroups group2 = ProductGroups.builder()
                 .name("Test Group2")
                 .description("Test Description2")
                 .build();
+
         productGroupRepository.save(group1);
         productGroupRepository.save(group2);
 
@@ -112,7 +110,32 @@ public class ProductGroupsSuiteTest {
         assertEquals(2, allGroups.size());
 
         //CleanUp
-        productGroupRepository.deleteById(group1.getId());
-        productGroupRepository.deleteById(group2.getId());
+        productGroupRepository.deleteAll();
+    }
+    @Test
+    public void testSaveProductWithProductGroup() {
+        //Given
+        ProductGroups group = ProductGroups.builder()
+                .name("Test Group")
+                .description("Test Description")
+                .build();
+
+        ProductGroups savedGroup = productGroupRepository.save(group);
+
+        Product product = new Product(1L, group, "Test Product Name", new BigDecimal(10), null);
+
+        productRepository.save(product);
+
+        //When
+        ProductGroups groupWithProducts = productGroupRepository.findById(savedGroup.getId()).orElse(null);
+
+        //Then
+        assertNotNull(groupWithProducts);
+        assertEquals(1, groupWithProducts.getProducts().size());
+        assertEquals("Test Product Name", groupWithProducts.getProducts().get(0).getName());
+
+        //CleanUp
+        productGroupRepository.deleteAll();
+        productRepository.deleteAll();
     }
 }
