@@ -33,8 +33,7 @@ public class ProductGroups {
             targetEntity = Product.class,
             mappedBy = "productGroups",
             cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
+            fetch = FetchType.EAGER
     )
-    @Fetch(FetchMode.JOIN)
     private List<Product> products =new ArrayList<>();
 }
