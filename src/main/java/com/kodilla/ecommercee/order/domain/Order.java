@@ -2,15 +2,15 @@ package com.kodilla.ecommercee.order.domain;
 
 import com.kodilla.ecommercee.cart.domain.Cart;
 import com.kodilla.ecommercee.user.domain.User;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Getter
+@Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "ORDERS")
@@ -18,7 +18,6 @@ public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull
     @Column(name = "ID", unique = true)
     private Long orderId;
     @NotNull

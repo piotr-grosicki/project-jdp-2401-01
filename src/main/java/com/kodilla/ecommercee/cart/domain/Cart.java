@@ -5,7 +5,6 @@ import com.kodilla.ecommercee.user.domain.User;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
