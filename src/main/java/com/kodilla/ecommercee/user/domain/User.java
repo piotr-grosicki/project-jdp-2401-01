@@ -2,10 +2,7 @@ package com.kodilla.ecommercee.user.domain;
 
 import com.kodilla.ecommercee.cart.domain.Cart;
 import com.kodilla.ecommercee.order.domain.Order;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -16,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Getter
+@Setter
 @Entity(name = "USERS")
 public class User {
     @Id
