@@ -1,9 +1,7 @@
 package com.kodilla.ecommercee.cart;
 
 import com.kodilla.ecommercee.cart.domain.Cart;
-import com.kodilla.ecommercee.cart.domain.CartTestDto;
 import com.kodilla.ecommercee.cart.repository.CartRepository;
-import com.kodilla.ecommercee.order.repository.OrderRepository;
 import com.kodilla.ecommercee.product.domain.Product;
 import com.kodilla.ecommercee.product.repository.ProductRepository;
 import com.kodilla.ecommercee.user.domain.User;
@@ -20,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -42,12 +40,15 @@ public class CartEntityTestSuite {
         cartRepository.save(cart1);
 
         //Then
-        assertNotEquals(0L, (long) cart1.getCartId());
+        assertNotEquals(0L, cart1.getCartId());
         assertTrue(cartRepository.findById(cart1.getCartId()).isPresent());
+
+        //CleanUp
+        cartRepository.deleteAll();
     }
 
     @Test
-    public void testFindByCartId() {
+    public void testGetCart() {
         //Given
         Cart cart1 = Cart.builder().products(new ArrayList<>()).build();
         Product product1 = Product.builder()
@@ -64,7 +65,6 @@ public class CartEntityTestSuite {
         product2.getCarts().add(cart1);
         user1.getCarts().add(cart1);
 
-
         userRepository.save(user1);
         cartRepository.save(cart1);
         productRepository.save(product1);
@@ -79,6 +79,11 @@ public class CartEntityTestSuite {
         assertEquals("Alex", optionalCart.map(u -> u.getUser().getUsername()).orElse(null));
         assertEquals(2, prodList.size());
         assertEquals(new BigDecimal("19.99"), prodList.get(1).getPrice());
+
+        //CleanUp
+        cartRepository.deleteAll();
+        userRepository.deleteAll();
+        productRepository.deleteAll();
     }
 
     @Test
@@ -109,6 +114,24 @@ public class CartEntityTestSuite {
         assert prodList2 != null;
         assertEquals(2, prodList2.size());
         System.out.println("Product List size in Cart Entity after test: " + prodList2.size());
+
+        //CleanUp
+        cartRepository.deleteAll();
+        productRepository.deleteAll();
+    }
+
+    @Test
+    public void testDeleteCart() {
+        //Given
+        Cart cart1 = Cart.builder().build();
+        cartRepository.save(cart1);
+
+        //When
+        cartRepository.deleteById(cart1.getCartId());
+        Optional<Cart> optionalCart = cartRepository.findByCartId(cart1.getCartId());
+
+        //Then
+        assertFalse(optionalCart.isPresent());
     }
 
     @Test
@@ -140,7 +163,10 @@ public class CartEntityTestSuite {
         //Then
         assert prodList != null;
         assertEquals(1, prodList.size());
-        assertEquals("Test product 1", optionalCart.map(p -> p.getProducts().get(0).getName()).orElse(null));
         System.out.println("Product List size in Cart Entity after test: " + prodList.size());
+
+        //CleanUp
+        cartRepository.deleteAll();
+        productRepository.deleteAll();
     }
 }

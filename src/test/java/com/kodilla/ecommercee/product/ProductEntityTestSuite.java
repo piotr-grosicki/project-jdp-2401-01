@@ -17,8 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static junit.framework.TestCase.assertEquals;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -65,6 +64,7 @@ public class ProductEntityTestSuite {
 
         //When
         productRepository.save(product1);
+        System.out.println(product1.getProductId());
 
         //Then
         assertNotEquals(0L, (long) product1.getProductId());
@@ -104,9 +104,6 @@ public class ProductEntityTestSuite {
 
         //Then
         assertFalse(optionalProduct.isPresent());
-
-        //CleanUp
-        productRepository.deleteAll();
     }
 
     @Test
