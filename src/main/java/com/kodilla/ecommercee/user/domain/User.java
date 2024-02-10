@@ -1,8 +1,10 @@
 package com.kodilla.ecommercee.user.domain;
 
-import com.kodilla.ecommercee.cart.domain.Cart;
+import com.kodilla.ecommercee.cart.Domain.Cart;
 import com.kodilla.ecommercee.order.domain.Order;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -12,10 +14,12 @@ import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Builder
 @Entity(name = "USERS")
 public class User {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotNull
     @Column(name = "USERID", unique = true)
     private Long userId;

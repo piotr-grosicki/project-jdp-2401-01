@@ -1,6 +1,6 @@
 package com.kodilla.ecommercee.product.domain;
 
-import com.kodilla.ecommercee.cart.domain.Cart;
+import com.kodilla.ecommercee.cart.Domain.Cart;
 import com.kodilla.ecommercee.productGroup.domain.ProductGroups;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,7 +20,6 @@ import java.util.List;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull
     @Column(name = "ID", unique = true)
     private Long productId;
     @ManyToOne

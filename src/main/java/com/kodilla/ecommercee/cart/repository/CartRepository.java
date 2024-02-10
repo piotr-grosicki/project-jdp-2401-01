@@ -1,6 +1,6 @@
 package com.kodilla.ecommercee.cart.repository;
 
-import com.kodilla.ecommercee.cart.domain.Cart;
+import com.kodilla.ecommercee.cart.Domain.Cart;
 import com.kodilla.ecommercee.product.domain.Product;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
