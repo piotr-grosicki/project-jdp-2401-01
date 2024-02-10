@@ -33,9 +33,9 @@ public class UserTestSuite {
 
         //When
         User savedUser = userRepository.save(user);
+        Optional<User> retrievedUser = userRepository.findById(savedUser.getUserId());
 
         //Then
-        Optional<User> retrievedUser = userRepository.findById(savedUser.getUserId());
         assertTrue(retrievedUser.isPresent());
         assertEquals("username", retrievedUser.get().getUsername());
         assertEquals("password", retrievedUser.get().getPassword());
@@ -57,9 +57,9 @@ public class UserTestSuite {
         user.setUsername("updated username");
         user.setPassword("updated password");
         userRepository.save(user);
+        Optional<User> updatedUser = userRepository.findById(user.getUserId());
 
         //Then
-        Optional<User> updatedUser = userRepository.findById(user.getUserId());
         assertEquals("updated username", updatedUser.get().getUsername());
         assertEquals("updated password", updatedUser.get().getPassword());
 
@@ -77,13 +77,13 @@ public class UserTestSuite {
 
         //When
         userRepository.deleteById(user.getUserId());
+        Optional<User> deletedUser = userRepository.findById(user.getUserId());
 
         //Then
-        Optional<User> deletedUser = userRepository.findById(user.getUserId());
         assertFalse(deletedUser.isPresent());
     }
     @Test
-    public void testSaveserWitCard(){
+    public void testSaveserWitCart(){
         //Given
         User user = User.builder()
                 .username("username")
