@@ -61,7 +61,7 @@ public class OrderEntityTest {
         Cart cart = Cart.builder()
                 .build();
         Order order = Order.builder()
-                .orderId(1L).orderValue(new BigDecimal(15.67)).build();
+                .orderValue(new BigDecimal(15.67)).build();
         //When
         userRepository.save(user);
         orderRepository.save(order);
@@ -70,7 +70,6 @@ public class OrderEntityTest {
         //Then
         assertEquals(0,orders.size());
         //Cleanup
-        cartRepository.deleteById(cart.getCartId());
         userRepository.deleteById(user.getUserId());
     }
     @Test
