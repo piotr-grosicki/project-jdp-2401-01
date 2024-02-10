@@ -20,7 +20,6 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull
     @Column(name = "USERID", unique = true)
     private Long userId;
     @Column(name = "USERNAME", unique = true)
