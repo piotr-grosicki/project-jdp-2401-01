@@ -9,6 +9,8 @@ import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Getter
+@Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter

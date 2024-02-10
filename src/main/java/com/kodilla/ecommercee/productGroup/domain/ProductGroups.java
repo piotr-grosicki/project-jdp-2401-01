@@ -1,23 +1,23 @@
 package com.kodilla.ecommercee.productGroup.domain;
 
 import com.kodilla.ecommercee.product.domain.Product;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+
+import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Entity(name = "PRODUCT_GROUPS")
 public class ProductGroups {
     @Id
     @GeneratedValue
-    @NotNull
     @Column(name = "PRODUCT_GROUP_ID", unique = true)
     private Long id;
 
@@ -31,7 +31,7 @@ public class ProductGroups {
             targetEntity = Product.class,
             mappedBy = "productGroups",
             cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
+            fetch = FetchType.EAGER
     )
     private List<Product> products =new ArrayList<>();
 }

@@ -1,6 +1,6 @@
 package com.kodilla.ecommercee.user.domain;
 
-import com.kodilla.ecommercee.cart.Domain.Cart;
+import com.kodilla.ecommercee.cart.domain.Cart;
 import com.kodilla.ecommercee.order.domain.Order;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,8 +19,8 @@ import java.util.List;
 @Entity(name = "USERS")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "USERID", unique = true)
+    @GeneratedValue
+    @Column(name = "USER_ID", unique = true)
     private Long userId;
     @Column(name = "USERNAME", unique = true)
     private String username;
