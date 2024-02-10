@@ -52,6 +52,8 @@ public class OrderEntityTest {
         List<Order> orders = orderRepository.findAll();
         //Then
         assertEquals(1, orders.size());
+        //Cleanup
+        orderRepository.deleteById(order.getOrderId());
     }
     @Test
     public void deleteOrderTest(){
