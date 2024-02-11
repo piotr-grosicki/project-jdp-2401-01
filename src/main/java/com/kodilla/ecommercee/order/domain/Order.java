@@ -2,10 +2,8 @@ package com.kodilla.ecommercee.order.domain;
 
 import com.kodilla.ecommercee.cart.domain.Cart;
 import com.kodilla.ecommercee.user.domain.User;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -13,6 +11,7 @@ import java.math.BigDecimal;
 
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "ORDERS")

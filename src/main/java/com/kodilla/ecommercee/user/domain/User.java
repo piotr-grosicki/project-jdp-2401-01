@@ -11,14 +11,13 @@ import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Getter
 @Setter
+@Builder
 @Entity(name = "USERS")
 public class User {
     @Id
     @GeneratedValue
-    @NotNull
     @Column(name = "USER_ID", unique = true)
     private Long userId;
     @Column(name = "USERNAME", unique = true)
