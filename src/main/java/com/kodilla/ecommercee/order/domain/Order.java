@@ -1,6 +1,6 @@
 package com.kodilla.ecommercee.order.domain;
 
-import com.kodilla.ecommercee.cart.Domain.Cart;
+import com.kodilla.ecommercee.cart.domain.Cart;
 import com.kodilla.ecommercee.user.domain.User;
 import lombok.*;
 
@@ -13,8 +13,6 @@ import java.math.BigDecimal;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
-@Builder
 @Entity(name = "ORDERS")
 public class Order {
 

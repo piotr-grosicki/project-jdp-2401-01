@@ -1,6 +1,6 @@
 package com.kodilla.ecommercee.order;
 
-import com.kodilla.ecommercee.cart.Domain.Cart;
+import com.kodilla.ecommercee.cart.domain.Cart;
 import com.kodilla.ecommercee.cart.repository.CartRepository;
 import com.kodilla.ecommercee.order.domain.Order;
 import com.kodilla.ecommercee.order.repository.OrderRepository;
@@ -86,5 +86,27 @@ public class OrderEntityTest {
         assertEquals(new BigDecimal(15.78),order.getOrderValue());
         //Cleanup
         orderRepository.deleteAll();
+    }
+    @Test
+    public void relationsOrderTest(){
+        //Given
+        User user = User.builder()
+                .build();
+        Cart cart = Cart.builder()
+                .build();
+        Order order = Order.builder()
+                .orderValue(new BigDecimal(15.67)).build();
+        //When
+        userRepository.save(user);
+        cartRepository.save(cart);
+        orderRepository.save(order);
+        order.setCart(cart);
+        order.setUser(user);
+        long userId = order.getUser().getUserId();
+        long cartId = order.getCart().getCartId();
+        //Then
+        assertEquals(1L,userId);
+        assertEquals(1L,cartId);
+
     }
 }

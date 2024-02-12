@@ -16,7 +16,7 @@ import java.util.List;
 @Entity(name = "CART")
 public class Cart {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Long cartId;
     @ManyToOne
