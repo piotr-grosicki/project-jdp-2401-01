@@ -19,7 +19,7 @@ import static org.junit.Assert.*;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class OrderEntityTest {
+public class OrderEntityTestSuite {
 
     @Autowired
     private OrderRepository orderRepository;
@@ -91,16 +91,14 @@ public class OrderEntityTest {
                 .orderValue(new BigDecimal(15.67)).build();
         //When
         userRepository.save(user);
-        System.out.println(user.getUserId());
         cartRepository.save(cart);
         orderRepository.save(order);
-        System.out.println(user.getUserId());
         order.setCart(cart);
         order.setUser(user);
         long userId = order.getUser().getUserId();
         long cartId = order.getCart().getCartId();
         //Then
-        //assertEquals(1L,userId);
+        assertEquals(1L, userId);
         assertEquals(1L,cartId);
         //Cleanup
         orderRepository.deleteAll();
