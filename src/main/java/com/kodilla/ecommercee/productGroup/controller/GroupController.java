@@ -4,12 +4,14 @@ import com.kodilla.ecommercee.productGroup.domain.ProductGroups;
 import com.kodilla.ecommercee.productGroup.domain.ProductGroupsDTO;
 import com.kodilla.ecommercee.productGroup.mapper.ProductGroupMapper;
 import com.kodilla.ecommercee.productGroup.service.ProductGroupService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/groups")
 public class GroupController {
@@ -17,33 +19,29 @@ public class GroupController {
     private final ProductGroupService productGroupService;
     private final ProductGroupMapper productGroupMapper;
 
-    @Autowired
-    public GroupController(ProductGroupService productGroupService, ProductGroupMapper productGroupMapper){
-        this.productGroupService = productGroupService;
-        this.productGroupMapper = productGroupMapper;
-    }
-
     @GetMapping
-    public List<ProductGroupsDTO> getListOfGroups(){
+    public ResponseEntity<List<ProductGroupsDTO>> getListOfGroups(){
         List<ProductGroups> listOfGroups = productGroupService.getAllProductGroups();
-        return listOfGroups.stream()
+        List<ProductGroupsDTO> dtos = listOfGroups.stream()
                 .map(productGroupMapper::mapToProductGroupDTO)
                 .collect(Collectors.toList());
+        return new ResponseEntity<>(dtos, HttpStatus.OK);
     }
     @PostMapping
-    public void createGroup(@RequestBody ProductGroupsDTO productGroupsDTO){
+    public ResponseEntity<Object> createGroup(@RequestBody ProductGroupsDTO productGroupsDTO){
         ProductGroups productGroups = productGroupMapper.mapToProductGroups(productGroupsDTO);
         productGroupService.createProductGroup(productGroups);
-        System.out.println("The group has been created");
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
     @GetMapping(value = "{groupId}")
-    public ProductGroupsDTO getGroup(@PathVariable Long groupId){
+    public ResponseEntity<ProductGroupsDTO> getGroup(@PathVariable Long groupId){
         ProductGroups group = productGroupService.getProductGroupById(groupId)
                 .orElseThrow(()-> new RuntimeException("Product group not found by id:" + groupId));
-        return productGroupMapper.mapToProductGroupDTO(group);
+        ProductGroupsDTO dto = productGroupMapper.mapToProductGroupDTO(group);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
     }
     @PutMapping(value = "{groupId}")
-    public ProductGroupsDTO updateGroup(@PathVariable Long groupId, @RequestBody ProductGroupsDTO productGroupsDTO){
+    public ResponseEntity<ProductGroupsDTO> updateGroup(@PathVariable Long groupId, @RequestBody ProductGroupsDTO productGroupsDTO){
        ProductGroups existingGroup = productGroupService.getProductGroupById(groupId)
                .orElseThrow(()-> new RuntimeException("Product group not found by id:" + groupId));
 
@@ -51,12 +49,13 @@ public class GroupController {
        updatedGroup.setId(existingGroup.getId());
 
        ProductGroups savedGroup = productGroupService.updateProductGroup(updatedGroup);
-       return productGroupMapper.mapToProductGroupDTO(savedGroup);
+       ProductGroupsDTO savedDto = productGroupMapper.mapToProductGroupDTO(savedGroup);
+       return new ResponseEntity<>(savedDto, HttpStatus.OK);
     }
     @DeleteMapping(value = "{groupId}")
-    public void deleteGroup (@PathVariable Long groupId){
+    public ResponseEntity<Object> deleteGroup (@PathVariable Long groupId){
         productGroupService.deleteProductGroup(groupId);
-        System.out.println("The group has been deleted");
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
 

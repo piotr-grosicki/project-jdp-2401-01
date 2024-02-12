@@ -2,20 +2,16 @@ package com.kodilla.ecommercee.productGroup.service;
 
 import com.kodilla.ecommercee.productGroup.domain.ProductGroups;
 import com.kodilla.ecommercee.productGroup.repository.ProductGroupRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
+@RequiredArgsConstructor
 @Service
 public class ProductGroupService {
     private final ProductGroupRepository productGroupRepository;
-
-    @Autowired
-    public ProductGroupService (ProductGroupRepository productGroupRepository){
-        this.productGroupRepository = productGroupRepository;
-    }
 
     public List<ProductGroups> getAllProductGroups(){
         return productGroupRepository.findAll();
