@@ -11,6 +11,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -18,6 +19,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 @SpringBootTest
+@Transactional
 @RunWith(SpringRunner.class)
 public class OrderEntityTestSuite {
 
@@ -40,6 +42,7 @@ public class OrderEntityTestSuite {
         //Cleanup
         orderRepository.deleteAll();
     }
+
     @Test
     public void readOrderTest() {
         //Given
@@ -53,8 +56,9 @@ public class OrderEntityTestSuite {
         //Cleanup
         orderRepository.deleteAll();
     }
+
     @Test
-    public void deleteOrderTest(){
+    public void deleteOrderTest() {
         //Given
         Order order = Order.builder()
                 .orderValue(new BigDecimal(15.67)).build();
@@ -63,10 +67,11 @@ public class OrderEntityTestSuite {
         orderRepository.deleteById(order.getOrderId());
         List<Order> orders = orderRepository.findAll();
         //Then
-        assertEquals(0,orders.size());
+        assertEquals(0, orders.size());
     }
+
     @Test
-    public void updateOrderTest(){
+    public void updateOrderTest() {
         //Given
         Order order = Order.builder()
                 .orderValue(new BigDecimal(15.67)).build();
@@ -74,12 +79,12 @@ public class OrderEntityTestSuite {
         orderRepository.save(order);
         order.setOrderValue(new BigDecimal(15.78));
         //Then
-        assertEquals(new BigDecimal(15.78),order.getOrderValue());
+        assertEquals(new BigDecimal(15.78), order.getOrderValue());
         //Cleanup
         orderRepository.deleteAll();
     }
     @Test
-    public void relationsOrderTest(){
+    public void orderRelationsTest(){
         //Given
         User user = User.builder()
                 .build();
@@ -87,16 +92,16 @@ public class OrderEntityTestSuite {
                 .build();
         Order order = Order.builder()
                 .orderValue(new BigDecimal(15.67)).build();
+        order.setCart(cart);
+        order.setUser(user);
         //When
         userRepository.save(user);
         cartRepository.save(cart);
         orderRepository.save(order);
-        order.setCart(cart);
-        order.setUser(user);
-        long userId = order.getUser().getUserId();
-        long cartId = order.getCart().getCartId();
+        long userId = user.getUserId();
+        long cartId = cart.getCartId();
         //Then
-        assertEquals(1L, userId);
+        assertEquals(1L,userId);
         assertEquals(1L,cartId);
         //Cleanup
         orderRepository.deleteAll();
