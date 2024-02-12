@@ -35,8 +35,6 @@ public class OrderEntityTestSuite {
                 .orderValue(new BigDecimal(15.67)).build();
         //When
         orderRepository.save(order);
-        long id = order.getOrderId();
-        System.out.println(id);
         //Then
         assertTrue(orderRepository.existsById(order.getOrderId()));
         //Cleanup
