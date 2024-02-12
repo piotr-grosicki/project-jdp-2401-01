@@ -111,6 +111,7 @@ public class OrderEntityTestSuite {
         assertEquals(1L,userId);
         assertEquals(1L,cartId);
         //Cleanup
+        orderRepository.deleteById(order.getOrderId());
         userRepository.deleteById(userId);
     }
 }
