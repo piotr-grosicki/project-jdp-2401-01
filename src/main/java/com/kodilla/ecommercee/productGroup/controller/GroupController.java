@@ -25,20 +25,20 @@ public class GroupController {
         List<ProductGroupsDTO> dtos = listOfGroups.stream()
                 .map(productGroupMapper::mapToProductGroupDTO)
                 .collect(Collectors.toList());
-        return new ResponseEntity<>(dtos, HttpStatus.OK);
+        return ResponseEntity.ok(dtos);
     }
     @PostMapping
-    public ResponseEntity<Object> createGroup(@RequestBody ProductGroupsDTO productGroupsDTO){
+    public ResponseEntity<Void> createGroup(@RequestBody ProductGroupsDTO productGroupsDTO){
         ProductGroups productGroups = productGroupMapper.mapToProductGroups(productGroupsDTO);
         productGroupService.createProductGroup(productGroups);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return ResponseEntity.ok().build();
     }
     @GetMapping(value = "{groupId}")
     public ResponseEntity<ProductGroupsDTO> getGroup(@PathVariable Long groupId){
         ProductGroups group = productGroupService.getProductGroupById(groupId)
                 .orElseThrow(()-> new RuntimeException("Product group not found by id:" + groupId));
         ProductGroupsDTO dto = productGroupMapper.mapToProductGroupDTO(group);
-        return new ResponseEntity<>(dto, HttpStatus.OK);
+        return ResponseEntity.ok(dto);
     }
     @PutMapping(value = "{groupId}")
     public ResponseEntity<ProductGroupsDTO> updateGroup(@PathVariable Long groupId, @RequestBody ProductGroupsDTO productGroupsDTO){
@@ -50,12 +50,12 @@ public class GroupController {
 
        ProductGroups savedGroup = productGroupService.updateProductGroup(updatedGroup);
        ProductGroupsDTO savedDto = productGroupMapper.mapToProductGroupDTO(savedGroup);
-       return new ResponseEntity<>(savedDto, HttpStatus.OK);
+       return ResponseEntity.ok(savedDto);
     }
     @DeleteMapping(value = "{groupId}")
-    public ResponseEntity<Object> deleteGroup (@PathVariable Long groupId){
+    public ResponseEntity<Void> deleteGroup (@PathVariable Long groupId){
         productGroupService.deleteProductGroup(groupId);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.noContent().build();
     }
 }
 
