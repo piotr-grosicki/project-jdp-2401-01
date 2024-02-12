@@ -58,21 +58,14 @@ public class OrderEntityTest {
     @Test
     public void deleteOrderTest(){
         //Given
-        User user = User.builder()
-                .build();
-        Cart cart = Cart.builder()
-                .build();
         Order order = Order.builder()
                 .orderValue(new BigDecimal(15.67)).build();
         //When
-        userRepository.save(user);
         orderRepository.save(order);
         orderRepository.deleteById(order.getOrderId());
         List<Order> orders = orderRepository.findAll();
         //Then
         assertEquals(0,orders.size());
-        //Cleanup
-        userRepository.deleteById(user.getUserId());
     }
     @Test
     public void updateOrderTest(){
@@ -98,8 +91,10 @@ public class OrderEntityTest {
                 .orderValue(new BigDecimal(15.67)).build();
         //When
         userRepository.save(user);
+        System.out.println(user.getUserId());
         cartRepository.save(cart);
         orderRepository.save(order);
+        System.out.println(user.getUserId());
         order.setCart(cart);
         order.setUser(user);
         long userId = order.getUser().getUserId();

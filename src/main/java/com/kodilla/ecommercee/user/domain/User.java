@@ -19,7 +19,7 @@ import java.util.List;
 @Entity(name = "USERS")
 public class User {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "USER_ID", unique = true)
     private Long userId;
     @Column(name = "USERNAME", unique = true)
