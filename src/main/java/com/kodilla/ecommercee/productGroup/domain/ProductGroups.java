@@ -17,7 +17,7 @@ import java.util.List;
 @Entity(name = "PRODUCT_GROUPS")
 public class ProductGroups {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "PRODUCT_GROUP_ID", unique = true)
     private Long id;
 
