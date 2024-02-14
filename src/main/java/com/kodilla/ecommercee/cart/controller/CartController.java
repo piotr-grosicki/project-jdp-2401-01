@@ -1,10 +1,13 @@
 package com.kodilla.ecommercee.cart.controller;
 
+import com.kodilla.ecommercee.cart.domain.Cart;
 import com.kodilla.ecommercee.cart.domain.CartTestDto;
 import com.kodilla.ecommercee.order.domain.OrderDto;
 import com.kodilla.ecommercee.product.domain.ProductDto;
+import com.kodilla.ecommercee.user.domain.User;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 @RestController
@@ -28,6 +31,6 @@ public class CartController {
     }
     @PostMapping("/order/{cartId}")
     public OrderDto createOrderFromCart(@PathVariable long cartId){
-        return new OrderDto(cartId, "username");
+        return new OrderDto(cartId, User.builder().build(), Cart.builder().build(), new BigDecimal(0));
     }
 }
