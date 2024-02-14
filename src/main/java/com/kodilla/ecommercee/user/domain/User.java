@@ -5,7 +5,7 @@ import com.kodilla.ecommercee.order.domain.Order;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,8 +24,14 @@ public class User {
     private String username;
     @Column(name = "PASSWORD", unique = true)
     private String password;
+    @Column(name = "EMAIL", unique = true)
+    private String email;
     @Column(name ="STATUS")
     private Enum<UserStatus> statusEnum;
+    @Column(name = "KEY_EXPIRATION_TIME")
+    private LocalDateTime keyExpirationTime;
+    @Column(name = "GENERATED_KEY")
+    private String generatedKey;
     @OneToMany(
             targetEntity = Cart.class,
             mappedBy = "user",

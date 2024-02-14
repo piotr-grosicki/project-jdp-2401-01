@@ -1,5 +1,4 @@
 package com.kodilla.ecommercee.order;
-
 import com.kodilla.ecommercee.cart.domain.Cart;
 import com.kodilla.ecommercee.cart.repository.CartRepository;
 import com.kodilla.ecommercee.order.domain.Order;
@@ -11,23 +10,23 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
-
 @SpringBootTest
+@Transactional
 @RunWith(SpringRunner.class)
 public class OrderEntityTestSuite {
-
     @Autowired
     private OrderRepository orderRepository;
     @Autowired
     private UserRepository userRepository;
     @Autowired
     private CartRepository cartRepository;
-
     @Test
     public void createOrderTest() {
         //Given
@@ -35,13 +34,12 @@ public class OrderEntityTestSuite {
                 .orderValue(new BigDecimal(15.67)).build();
         //When
         orderRepository.save(order);
-        long id = order.getOrderId();
-        System.out.println(id);
         //Then
         assertTrue(orderRepository.existsById(order.getOrderId()));
         //Cleanup
-        orderRepository.deleteAll();
+        orderRepository.deleteById(order.getOrderId());
     }
+
     @Test
     public void readOrderTest() {
         //Given
@@ -53,10 +51,11 @@ public class OrderEntityTestSuite {
         //Then
         assertEquals(1, orders.size());
         //Cleanup
-        orderRepository.deleteAll();
+        orderRepository.deleteById(order.getOrderId());
     }
+
     @Test
-    public void deleteOrderTest(){
+    public void deleteOrderTest() {
         //Given
         Order order = Order.builder()
                 .orderValue(new BigDecimal(15.67)).build();
@@ -65,10 +64,10 @@ public class OrderEntityTestSuite {
         orderRepository.deleteById(order.getOrderId());
         List<Order> orders = orderRepository.findAll();
         //Then
-        assertEquals(0,orders.size());
+        assertEquals(0, orders.size());
     }
     @Test
-    public void updateOrderTest(){
+    public void updateOrderTest() {
         //Given
         Order order = Order.builder()
                 .orderValue(new BigDecimal(15.67)).build();
@@ -76,33 +75,37 @@ public class OrderEntityTestSuite {
         orderRepository.save(order);
         order.setOrderValue(new BigDecimal(15.78));
         //Then
-        assertEquals(new BigDecimal(15.78),order.getOrderValue());
+        assertEquals(new BigDecimal(15.78), order.getOrderValue());
         //Cleanup
-        orderRepository.deleteAll();
+        orderRepository.deleteById(order.getOrderId());
     }
     @Test
-    public void relationsOrderTest(){
+    public void orderRelationsTest(){
         //Given
         User user = User.builder()
-                .build();
+                .carts(new ArrayList<>()).orders(new ArrayList<>()).build();
         Cart cart = Cart.builder()
                 .build();
         Order order = Order.builder()
                 .orderValue(new BigDecimal(15.67)).build();
+        order.setCart(cart);
+        order.setUser(user);
+        cart.setCartId(cart.getCartId());
+        cart.setUser(user);
+        user.getCarts().add(cart);
+        user.getOrders().add(order);
         //When
         userRepository.save(user);
         cartRepository.save(cart);
         orderRepository.save(order);
-        order.setCart(cart);
-        order.setUser(user);
         long userId = order.getUser().getUserId();
         long cartId = order.getCart().getCartId();
+        System.out.println(userId);
+        System.out.println(cartId);
         //Then
-        assertEquals(1L, userId);
-        assertEquals(1L,cartId);
+        assertNotEquals(0L,userId);
+        assertNotEquals(0L,cartId);
         //Cleanup
-        orderRepository.deleteAll();
-        cartRepository.deleteAll();
-        userRepository.deleteAll();
+        userRepository.deleteById(userId);
     }
 }
