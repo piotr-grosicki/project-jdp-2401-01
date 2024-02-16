@@ -26,13 +26,13 @@ public class OrderController {
         return ResponseEntity.ok(orderMapper.mapToOrderDtoList(orderList));
     }
     @GetMapping(value = "{orderId}")
-    public ResponseEntity<OrderDto> getOrder(@PathVariable int orderId) throws OrderNotFoundException{
+    public ResponseEntity<OrderDto> getOrder(@PathVariable long orderId) throws OrderNotFoundException{
         return ResponseEntity.ok(orderMapper.mapToOrderDto(orderService.getOrder(orderId)));
     }
     @DeleteMapping(value = "{orderId}")
-    public ResponseEntity<Void> deleteOrder(@PathVariable Long orderId){
+    public ResponseEntity<Void> deleteOrder(@PathVariable long orderId){
         orderService.deleteOrder(orderId);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
     @PutMapping
     public ResponseEntity<OrderDto> updateOrder(@RequestBody OrderDto orderDto){
