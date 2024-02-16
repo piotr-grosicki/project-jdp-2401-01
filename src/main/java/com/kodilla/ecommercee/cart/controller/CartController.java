@@ -58,7 +58,7 @@ public class CartController {
     public ResponseEntity<Void> createOrderFromCart(@PathVariable Long cartId) throws CartNotFoundException {
         Cart cart = cartService.getCart(cartId);
         Order order = cartService.createOrderFromCart(cart);
-        orderService.addOrder(order);
+        orderService.saveOrder(order);
         return ResponseEntity.ok().build();
     }
 }

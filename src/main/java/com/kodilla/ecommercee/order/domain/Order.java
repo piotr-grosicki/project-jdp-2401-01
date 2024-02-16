@@ -27,6 +27,5 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "USER_ID")
     private User user;
-
     private BigDecimal orderValue;
 }
