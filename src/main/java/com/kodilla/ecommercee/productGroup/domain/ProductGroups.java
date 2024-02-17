@@ -21,10 +21,10 @@ public class ProductGroups {
     @Column(name = "PRODUCT_GROUP_ID", unique = true)
     private Long id;
 
-    @Column(name = "PRODUCT_GROUP_NAME")
+    @Column(name = "NAME")
     private String name;
 
-    @Column(name = "PRODUCT_GROUP_DESCRIPTION")
+    @Column(name = "DESCRIPTION")
     private String description;
 
     @OneToMany(

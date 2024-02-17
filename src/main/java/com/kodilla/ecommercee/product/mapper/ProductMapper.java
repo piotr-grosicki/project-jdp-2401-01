@@ -1,5 +1,7 @@
 package com.kodilla.ecommercee.product.mapper;
 
+import com.kodilla.ecommercee.cart.domain.Cart;
+import com.kodilla.ecommercee.product.controller.ProductNotFoundException;
 import com.kodilla.ecommercee.product.domain.Product;
 import com.kodilla.ecommercee.product.domain.ProductDto;
 import com.kodilla.ecommercee.productGroup.domain.ProductGroups;
@@ -16,8 +18,8 @@ public class ProductMapper {
 
     private final ProductGroupService productGroupService;
 
-    public Product mapToProduct(ProductDto productDto) {
-        ProductGroups group = productGroupService.getProductGroupById(productDto.getProductGroupId()).orElseThrow(NullPointerException::new);
+    public Product mapToProduct(ProductDto productDto) throws ProductNotFoundException {
+        ProductGroups group = productGroupService.getProductGroupById(productDto.getProductGroupId()).orElseThrow(ProductNotFoundException::new);
         return Product.builder()
                 .productId(productDto.getProductId())
                 .productGroups(group)
@@ -28,7 +30,11 @@ public class ProductMapper {
 
     public ProductDto mapToProductDto(Product product) {
         return new ProductDto(product.getProductId(), product.getProductGroups().getId(), product.getName(),
-                product.getPrice());
+                product.getPrice(),
+                product.getCarts().stream()
+                        .map(Cart::getCartId)
+                        .collect(Collectors.toList())
+        );
     }
 
     public List<ProductDto> mapToProductDtoList(List<Product> productsList) {

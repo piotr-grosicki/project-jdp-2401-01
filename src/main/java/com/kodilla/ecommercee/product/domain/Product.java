@@ -6,6 +6,7 @@ import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,15 +20,18 @@ import java.util.List;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID", unique = true)
+    @Column(name = "PRODUCT_ID", unique = true)
     private Long productId;
     @ManyToOne
-    @JoinColumn(name = "PRODUCTGROUP_ID")
+    @JoinColumn(name = "PRODUCT_GROUP_ID")
+    @NotNull
     private ProductGroups productGroups;
     @Column(name = "NAME")
+    @NotNull
     private String name;
     @Column(name = "PRICE")
+    @NotNull
     private BigDecimal price;
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "products", fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.PERSIST, mappedBy = "products", fetch = FetchType.EAGER)
     private List<Cart> carts = new ArrayList<>();
 }

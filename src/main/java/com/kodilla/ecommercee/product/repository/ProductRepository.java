@@ -16,10 +16,7 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
     List<Product> findAll();
 
     Optional<Product> findById(Long id);
+
     @Override
     Product save(Product product);
-
-    @Override
-    void deleteById(Long productId);
-
 }
