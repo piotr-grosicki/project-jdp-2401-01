@@ -19,10 +19,10 @@ import java.util.List;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID", unique = true)
+    @Column(name = "PRODUCT_ID", unique = true)
     private Long productId;
     @ManyToOne
-    @JoinColumn(name = "PRODUCTGROUP_ID")
+    @JoinColumn(name = "PRODUCT_GROUP_ID")
     private ProductGroups productGroups;
     @Column(name = "NAME")
     private String name;

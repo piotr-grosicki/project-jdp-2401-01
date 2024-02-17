@@ -22,7 +22,7 @@ public class CartService {
         return cartRepository.save(cart);
     }
 
-    public Cart getCart(final Long cartId) throws CartNotFoundException{
+    public Cart getCart(final Long cartId) throws CartNotFoundException {
         return cartRepository.findByCartId(cartId).orElseThrow(CartNotFoundException::new);
     }
 

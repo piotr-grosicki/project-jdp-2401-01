@@ -10,7 +10,6 @@ import com.kodilla.ecommercee.product.controller.ProductNotFoundException;
 import com.kodilla.ecommercee.product.domain.Product;
 import com.kodilla.ecommercee.product.domain.ProductDto;
 import com.kodilla.ecommercee.product.mapper.ProductMapper;
-import com.kodilla.ecommercee.user.controller.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +27,7 @@ public class CartController {
     private final OrderService orderService;
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> createCart(@RequestBody CartDto cartDto) throws UserNotFoundException {
+    public ResponseEntity<Void> createCart(@RequestBody CartDto cartDto) {
         Cart cart = cartMapper.mapToCart(cartDto);
         cartService.addCart(cart);
         return ResponseEntity.ok().build();

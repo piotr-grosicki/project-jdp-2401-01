@@ -4,7 +4,9 @@ import com.kodilla.ecommercee.user.domain.User;
 import com.kodilla.ecommercee.user.domain.UserDto;
 import com.kodilla.ecommercee.user.domain.UserStatus;
 import com.kodilla.ecommercee.user.domain.UserUpdateStatusDto;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserMapper {
 
     public static User mapToUser(UserDto userDto) {
@@ -15,6 +17,7 @@ public class UserMapper {
                 .statusEnum(UserStatus.ACTIVE)
                 .build();
     }
+
     public static UserUpdateStatusDto mapToUpdateStatusDto(User user) {
         return new UserUpdateStatusDto(user.getUserId(), (UserStatus) user.getStatusEnum());
     }
