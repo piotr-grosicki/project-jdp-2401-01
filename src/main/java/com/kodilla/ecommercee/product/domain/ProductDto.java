@@ -15,8 +15,7 @@ import java.util.List;
 public class ProductDto {
 
     private Long productId;
-    private ProductGroups productGroups;
+    private Long productGroupId;
     private String name;
     private BigDecimal price;
-    private List<Cart> cartsList;
 }
