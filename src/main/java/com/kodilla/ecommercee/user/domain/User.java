@@ -26,7 +26,6 @@ public class User {
     private String password;
     @Column(name = "EMAIL", unique = true)
     private String email;
-    @Enumerated(EnumType.STRING)
     @Column(name ="STATUS")
     private Enum<UserStatus> statusEnum;
     @Column(name = "KEY_EXPIRATION_TIME")

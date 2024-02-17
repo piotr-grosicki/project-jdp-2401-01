@@ -26,7 +26,7 @@ public class ProductGroupsSuiteTest {
     private ProductRepository productRepository;
 
     @Test
-    public void testSaveProductGroup(){
+    public void testSaveProductGroup() {
         //Given
         ProductGroups group = ProductGroups.builder()
                 .name("Test Group")
@@ -49,7 +49,7 @@ public class ProductGroupsSuiteTest {
     }
 
     @Test
-    public void testUpdateProductGroup(){
+    public void testUpdateProductGroup() {
         //Given
         ProductGroups group = ProductGroups.builder()
                 .name("Test Group")
@@ -70,8 +70,9 @@ public class ProductGroupsSuiteTest {
         //CleanUp
         productGroupRepository.deleteById(updatedGroup.getId());
     }
+
     @Test
-    public void testDeleteProductGroup(){
+    public void testDeleteProductGroup() {
         //Given
         ProductGroups group = ProductGroups.builder()
                 .name("Test Group")
@@ -88,7 +89,7 @@ public class ProductGroupsSuiteTest {
     }
 
     @Test
-    public void testGetAllProductGroups(){
+    public void testGetAllProductGroups() {
         //Given
         ProductGroups group1 = ProductGroups.builder()
                 .name("Test Group1")
@@ -112,6 +113,7 @@ public class ProductGroupsSuiteTest {
         //CleanUp
         productGroupRepository.deleteAll();
     }
+
     @Test
     public void testSaveProductWithProductGroup() {
         //Given
