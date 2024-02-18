@@ -5,7 +5,6 @@ import com.kodilla.ecommercee.productGroup.domain.ProductGroupsDTO;
 import com.kodilla.ecommercee.productGroup.mapper.ProductGroupMapper;
 import com.kodilla.ecommercee.productGroup.service.ProductGroupService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

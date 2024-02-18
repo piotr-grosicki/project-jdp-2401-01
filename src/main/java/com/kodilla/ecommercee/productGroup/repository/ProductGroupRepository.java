@@ -16,7 +16,7 @@ public interface ProductGroupRepository extends CrudRepository<ProductGroups, Lo
     List<ProductGroups> findAll();
 
     @Override
-    Optional<ProductGroups> findById(Long id);
+    Optional<ProductGroups> findById(Long productGroupId);
 
     @Override
     ProductGroups save(ProductGroups productGroups);

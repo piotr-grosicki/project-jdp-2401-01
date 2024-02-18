@@ -10,23 +10,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@Transactional
 public class ProductGroupsSuiteTest {
 
     @Autowired
     private ProductGroupRepository productGroupRepository;
 
-    @Autowired
-    private ProductRepository productRepository;
-
     @Test
-    public void testSaveProductGroup(){
+    public void testSaveAndGetProductGroup(){
         //Given
         ProductGroups group = ProductGroups.builder()
                 .name("Test Group")
@@ -34,8 +34,6 @@ public class ProductGroupsSuiteTest {
                 .build();
 
         //When
-        assertNotNull(group, "Group is null before saving");
-
         ProductGroups savedGroup = productGroupRepository.save(group);
         Optional<ProductGroups> retrievedGroup = productGroupRepository.findById(savedGroup.getId());
 
@@ -43,9 +41,6 @@ public class ProductGroupsSuiteTest {
         assertTrue(retrievedGroup.isPresent());
         assertEquals("Test Group", retrievedGroup.get().getName());
         assertEquals("Test Description", retrievedGroup.get().getDescription());
-
-        //CleanUp
-        productGroupRepository.deleteById(savedGroup.getId());
     }
 
     @Test
@@ -61,15 +56,14 @@ public class ProductGroupsSuiteTest {
         savedGroup.setName("Updated Name");
         savedGroup.setDescription("Updated Description");
         ProductGroups updatedGroup = productGroupRepository.save(savedGroup);
+        Optional<ProductGroups> optionalGroup = productGroupRepository.findById(updatedGroup.getId());
 
         //Then
-        assertEquals(savedGroup.getId(), updatedGroup.getId());
-        assertEquals("Updated Name", updatedGroup.getName());
-        assertEquals("Updated Description", updatedGroup.getDescription());
-
-        //CleanUp
-        productGroupRepository.deleteById(updatedGroup.getId());
+        assertEquals(savedGroup.getId(), optionalGroup.get().getId());
+        assertEquals("Updated Name", optionalGroup.get().getName());
+        assertEquals("Updated Description", optionalGroup.get().getDescription());
     }
+
     @Test
     public void testDeleteProductGroup(){
         //Given
@@ -108,23 +102,26 @@ public class ProductGroupsSuiteTest {
 
         //Then
         assertEquals(2, allGroups.size());
-
-        //CleanUp
-        productGroupRepository.deleteAll();
     }
+
     @Test
     public void testSaveProductWithProductGroup() {
         //Given
         ProductGroups group = ProductGroups.builder()
                 .name("Test Group")
                 .description("Test Description")
+                .products(new ArrayList<>())
                 .build();
 
+        Product product = Product.builder()
+                                .name("Headphones")
+                                .price(new BigDecimal("129.99"))
+                                .productGroups(group)
+                                .build();
+
+        group.getProducts().add(product);
+
         ProductGroups savedGroup = productGroupRepository.save(group);
-
-        Product product = new Product(1L, group, "Test Product Name", new BigDecimal(10), null);
-
-        productRepository.save(product);
 
         //When
         ProductGroups groupWithProducts = productGroupRepository.findById(savedGroup.getId()).orElse(null);
@@ -132,10 +129,7 @@ public class ProductGroupsSuiteTest {
         //Then
         assertNotNull(groupWithProducts);
         assertEquals(1, groupWithProducts.getProducts().size());
-        assertEquals("Test Product Name", groupWithProducts.getProducts().get(0).getName());
-
-        //CleanUp
-        productGroupRepository.deleteAll();
-        productRepository.deleteAll();
+        assertEquals("Headphones", groupWithProducts.getProducts().get(0).getName());
+        assertEquals(new BigDecimal("129.99"), groupWithProducts.getProducts().get(0).getPrice());
     }
 }

@@ -3,7 +3,6 @@ package com.kodilla.ecommercee.productGroup.service;
 import com.kodilla.ecommercee.productGroup.domain.ProductGroups;
 import com.kodilla.ecommercee.productGroup.repository.ProductGroupRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,19 +16,19 @@ public class ProductGroupService {
         return productGroupRepository.findAll();
     }
 
-    public Optional<ProductGroups> getProductGroupById(Long id){
-        return productGroupRepository.findById(id);
+    public Optional<ProductGroups> getProductGroupById(final Long productGroupId){
+        return productGroupRepository.findById(productGroupId);
     }
 
-    public ProductGroups createProductGroup(ProductGroups productGroups){
+    public ProductGroups createProductGroup(final ProductGroups productGroups){
         return productGroupRepository.save(productGroups);
     }
 
-    public ProductGroups updateProductGroup(ProductGroups productGroups){
+    public ProductGroups updateProductGroup(final ProductGroups productGroups){
         return productGroupRepository.save(productGroups);
     }
 
-    public void deleteProductGroup(Long id){
-        productGroupRepository.deleteById(id);
+    public void deleteProductGroup(final Long productGroupId){
+        productGroupRepository.deleteById(productGroupId);
     }
 }
