@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 @RunWith(SpringRunner.class)
 @Transactional
 @SpringBootTest
@@ -24,7 +25,7 @@ public class UserTestSuite {
     public UserRepository userRepository;
 
     @Test
-    public void testSaveUser(){
+    public void testSaveUser() {
         //Given
         User user = User.builder()
                 .username("username")
@@ -43,8 +44,9 @@ public class UserTestSuite {
         //CleanUp
         userRepository.deleteAll();
     }
+
     @Test
-    public void testUpdateUser(){
+    public void testUpdateUser() {
         //Given
         User user = User.builder()
                 .username("username")
@@ -66,8 +68,9 @@ public class UserTestSuite {
         //CleanUp
         userRepository.deleteAll();
     }
+
     @Test
-    public void testDeleteUser(){
+    public void testDeleteUser() {
         //Given
         User user = User.builder()
                 .username("username")
@@ -82,8 +85,9 @@ public class UserTestSuite {
         //Then
         assertFalse(deletedUser.isPresent());
     }
+
     @Test
-    public void testSaveserWitCart(){
+    public void testSaveUserWithCart() {
         //Given
         User user = User.builder()
                 .username("username")
@@ -109,7 +113,7 @@ public class UserTestSuite {
     }
 
     @Test
-    public void testSaveserWitOrder(){
+    public void testSaveUserWithOrder() {
         //Given
         User user = User.builder()
                 .username("username")

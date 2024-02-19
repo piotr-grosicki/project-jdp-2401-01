@@ -10,7 +10,9 @@ import java.util.Optional;
 @Transactional
 @Repository
 public interface UserRepository extends CrudRepository<User, Long> {
+
     @Override
     User save(User user);
+
     User findByUserId(Long userId);
 }

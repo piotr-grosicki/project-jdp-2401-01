@@ -2,11 +2,9 @@ package com.kodilla.ecommercee.order.domain;
 
 import com.kodilla.ecommercee.cart.domain.Cart;
 import com.kodilla.ecommercee.user.domain.User;
-
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Getter
@@ -16,7 +14,6 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Entity(name = "ORDERS")
 public class Order {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ORDER_ID", unique = true)
@@ -27,5 +24,6 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "USER_ID")
     private User user;
+    @JoinColumn(name = "VALUE")
     private BigDecimal orderValue;
 }
