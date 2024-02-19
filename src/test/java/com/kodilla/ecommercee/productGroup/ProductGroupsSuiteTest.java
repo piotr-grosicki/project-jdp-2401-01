@@ -1,7 +1,6 @@
 package com.kodilla.ecommercee.productGroup;
 
 import com.kodilla.ecommercee.product.domain.Product;
-import com.kodilla.ecommercee.product.repository.ProductRepository;
 import com.kodilla.ecommercee.productGroup.domain.ProductGroups;
 import com.kodilla.ecommercee.productGroup.repository.ProductGroupRepository;
 import org.junit.Test;
