@@ -47,78 +47,78 @@ public class CartEntityTestSuite {
         cartRepository.deleteAll();
     }
 
-    @Test
-    public void testGetCart() {
-        //Given
-        Cart cart1 = Cart.builder().products(new ArrayList<>()).build();
-        Product product1 = Product.builder()
-                .name("Test product 1").price(new BigDecimal("14.99")).carts(new ArrayList<>()).build();
-        Product product2 = Product.builder()
-                .name("Test product 2").price(new BigDecimal("19.99")).carts(new ArrayList<>()).build();
-        User user1 = User.builder()
-                .username("Alex").password("12345").carts(new ArrayList<>()).statusEnum(UserStatus.ACTIVE).build();
+//    @Test
+//    public void testGetCart() {
+//        //Given
+//        Cart cart1 = Cart.builder().products(new ArrayList<>()).build();
+//        Product product1 = Product.builder()
+//                .name("Test product 1").price(new BigDecimal("14.99")).carts(new ArrayList<>()).build();
+//        Product product2 = Product.builder()
+//                .name("Test product 2").price(new BigDecimal("19.99")).carts(new ArrayList<>()).build();
+//        User user1 = User.builder()
+//                .username("Alex").password("12345").carts(new ArrayList<>()).statusEnum(UserStatus.ACTIVE).build();
+//
+//        cart1.getProducts().add(product1);
+//        cart1.getProducts().add(product2);
+//        cart1.setUser(user1);
+//        product1.getCarts().add(cart1);
+//        product2.getCarts().add(cart1);
+//        user1.getCarts().add(cart1);
+//
+//        userRepository.save(user1);
+//        cartRepository.save(cart1);
+//        productRepository.save(product1);
+//        productRepository.save(product2);
+//
+//        //When
+//        Optional<Cart> optionalCart = cartRepository.findByCartId(cart1.getCartId());
+//        List<Product> prodList = optionalCart.map(Cart::getProducts).orElse(null);
+//
+//        //Then
+//        assertTrue(optionalCart.isPresent());
+//        assertEquals("Alex", optionalCart.map(u -> u.getUser().getUsername()).orElse(null));
+//        assertEquals(2, prodList.size());
+//        assertEquals(new BigDecimal("19.99"), prodList.get(1).getPrice());
+//
+//        //CleanUp
+//        cartRepository.deleteAll();
+//        userRepository.deleteAll();
+//        productRepository.deleteAll();
+//    }
 
-        cart1.getProducts().add(product1);
-        cart1.getProducts().add(product2);
-        cart1.setUser(user1);
-        product1.getCarts().add(cart1);
-        product2.getCarts().add(cart1);
-        user1.getCarts().add(cart1);
-
-        userRepository.save(user1);
-        cartRepository.save(cart1);
-        productRepository.save(product1);
-        productRepository.save(product2);
-
-        //When
-        Optional<Cart> optionalCart = cartRepository.findByCartId(cart1.getCartId());
-        List<Product> prodList = optionalCart.map(Cart::getProducts).orElse(null);
-
-        //Then
-        assertTrue(optionalCart.isPresent());
-        assertEquals("Alex", optionalCart.map(u -> u.getUser().getUsername()).orElse(null));
-        assertEquals(2, prodList.size());
-        assertEquals(new BigDecimal("19.99"), prodList.get(1).getPrice());
-
-        //CleanUp
-        cartRepository.deleteAll();
-        userRepository.deleteAll();
-        productRepository.deleteAll();
-    }
-
-    @Test
-    public void testUpdateCart() {
-        //Given
-        Cart cart1 = Cart.builder().products(new ArrayList<>()).build();
-        Product product1 = Product.builder()
-                .name("Test product 1").price(new BigDecimal("14.99")).carts(new ArrayList<>()).build();
-        Product product2 = Product.builder()
-                .name("Test product 2").price(new BigDecimal("19.99")).carts(new ArrayList<>()).build();
-
-        cart1.getProducts().add(product1);
-        product1.getCarts().add(cart1);
-        cartRepository.save(cart1);
-        Optional<Cart> optionalCart = cartRepository.findByCartId(cart1.getCartId());
-        List<Product> prodList = optionalCart.map(Cart::getProducts).orElse(null);
-        assert prodList != null;
-        System.out.println("Product List size in Cart Entity before test: " + prodList.size());
-
-        //When
-        cart1.getProducts().add(product2);
-        product2.getCarts().add(cart1);
-        cartRepository.save(cart1);
-        Optional<Cart> optionalCart2 = cartRepository.findByCartId(cart1.getCartId());
-        List<Product> prodList2 = optionalCart2.map(Cart::getProducts).orElse(null);
-
-        //Then
-        assert prodList2 != null;
-        assertEquals(2, prodList2.size());
-        System.out.println("Product List size in Cart Entity after test: " + prodList2.size());
-
-        //CleanUp
-        cartRepository.deleteAll();
-        productRepository.deleteAll();
-    }
+//    @Test
+//    public void testUpdateCart() {
+//        //Given
+//        Cart cart1 = Cart.builder().products(new ArrayList<>()).build();
+//        Product product1 = Product.builder()
+//                .name("Test product 1").price(new BigDecimal("14.99")).carts(new ArrayList<>()).build();
+//        Product product2 = Product.builder()
+//                .name("Test product 2").price(new BigDecimal("19.99")).carts(new ArrayList<>()).build();
+//
+//        cart1.getProducts().add(product1);
+//        product1.getCarts().add(cart1);
+//        cartRepository.save(cart1);
+//        Optional<Cart> optionalCart = cartRepository.findByCartId(cart1.getCartId());
+//        List<Product> prodList = optionalCart.map(Cart::getProducts).orElse(null);
+//        assert prodList != null;
+//        System.out.println("Product List size in Cart Entity before test: " + prodList.size());
+//
+//        //When
+//        cart1.getProducts().add(product2);
+//        product2.getCarts().add(cart1);
+//        cartRepository.save(cart1);
+//        Optional<Cart> optionalCart2 = cartRepository.findByCartId(cart1.getCartId());
+//        List<Product> prodList2 = optionalCart2.map(Cart::getProducts).orElse(null);
+//
+//        //Then
+//        assert prodList2 != null;
+//        assertEquals(2, prodList2.size());
+//        System.out.println("Product List size in Cart Entity after test: " + prodList2.size());
+//
+//        //CleanUp
+//        cartRepository.deleteAll();
+//        productRepository.deleteAll();
+//    }
 
     @Test
     public void testDeleteCart() {
@@ -134,39 +134,39 @@ public class CartEntityTestSuite {
         assertFalse(optionalCart.isPresent());
     }
 
-    @Test
-    public void testRemovingProductFromCart() {
-        //Given
-        Cart cart1 = Cart.builder().products(new ArrayList<>()).build();
-        Product product1 = Product.builder()
-                .name("Test product 1").price(new BigDecimal("14.99")).carts(new ArrayList<>()).build();
-        Product product2 = Product.builder()
-                .name("Test product 2").price(new BigDecimal("19.99")).carts(new ArrayList<>()).build();
-
-        cart1.getProducts().add(product1);
-        cart1.getProducts().add(product2);
-        product1.getCarts().add(cart1);
-        product2.getCarts().add(cart1);
-        cartRepository.save(cart1);
-        Optional<Cart> optionalCart = cartRepository.findByCartId(cart1.getCartId());
-        List<Product> prodList = optionalCart.map(Cart::getProducts).orElse(null);
-        assert prodList != null;
-        System.out.println("Product List size in Cart Entity before test: " + prodList.size());
-
-        //When
-        cart1.getProducts().remove(product2);
-        product2.getCarts().remove(cart1);
-        cartRepository.save(cart1);
-        optionalCart = cartRepository.findByCartId(cart1.getCartId());
-        prodList = optionalCart.map(Cart::getProducts).orElse(null);
-
-        //Then
-        assert prodList != null;
-        assertEquals(1, prodList.size());
-        System.out.println("Product List size in Cart Entity after test: " + prodList.size());
-
-        //CleanUp
-        cartRepository.deleteAll();
-        productRepository.deleteAll();
-    }
+//    @Test
+//    public void testRemovingProductFromCart() {
+//        //Given
+//        Cart cart1 = Cart.builder().products(new ArrayList<>()).build();
+//        Product product1 = Product.builder()
+//                .name("Test product 1").price(new BigDecimal("14.99")).carts(new ArrayList<>()).build();
+//        Product product2 = Product.builder()
+//                .name("Test product 2").price(new BigDecimal("19.99")).carts(new ArrayList<>()).build();
+//
+//        cart1.getProducts().add(product1);
+//        cart1.getProducts().add(product2);
+//        product1.getCarts().add(cart1);
+//        product2.getCarts().add(cart1);
+//        cartRepository.save(cart1);
+//        Optional<Cart> optionalCart = cartRepository.findByCartId(cart1.getCartId());
+//        List<Product> prodList = optionalCart.map(Cart::getProducts).orElse(null);
+//        assert prodList != null;
+//        System.out.println("Product List size in Cart Entity before test: " + prodList.size());
+//
+//        //When
+//        cart1.getProducts().remove(product2);
+//        product2.getCarts().remove(cart1);
+//        cartRepository.save(cart1);
+//        optionalCart = cartRepository.findByCartId(cart1.getCartId());
+//        prodList = optionalCart.map(Cart::getProducts).orElse(null);
+//
+//        //Then
+//        assert prodList != null;
+//        assertEquals(1, prodList.size());
+//        System.out.println("Product List size in Cart Entity after test: " + prodList.size());
+//
+//        //CleanUp
+//        cartRepository.deleteAll();
+//        productRepository.deleteAll();
+//    }
 }

@@ -31,21 +31,21 @@ public class ProductController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> createProduct(@RequestBody final ProductDto productDto) {
+    public ResponseEntity<Void> createProduct(@RequestBody final ProductDto productDto) throws ProductNotFoundException {
         Product product = productMapper.mapToProduct(productDto);
         productService.saveProduct(product);
         return ResponseEntity.ok().build();
     }
 
     @PutMapping
-    public ResponseEntity<ProductDto> updateProduct(@RequestBody final ProductDto productDto) {
+    public ResponseEntity<ProductDto> updateProduct(@RequestBody final ProductDto productDto) throws ProductNotFoundException {
         Product product = productMapper.mapToProduct(productDto);
         Product savedProduct = productService.saveProduct(product);
         return ResponseEntity.ok(productMapper.mapToProductDto(savedProduct));
     }
 
     @DeleteMapping(value = "{productId}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable final Long productId) throws ProductNotFoundException {
+    public ResponseEntity<Void> deleteProduct(@PathVariable final Long productId) {
         productService.deleteProduct(productId);
         return ResponseEntity.noContent().build();
     }
