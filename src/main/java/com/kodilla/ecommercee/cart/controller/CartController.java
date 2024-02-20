@@ -27,7 +27,7 @@ public class CartController {
     private final OrderService orderService;
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> createCart(@RequestBody CartDto cartDto) {
+    public ResponseEntity<Void> createCart(@RequestBody CartDto cartDto) throws CartNotFoundException {
         Cart cart = cartMapper.mapToCart(cartDto);
         cartService.addCart(cart);
         return ResponseEntity.ok().build();

@@ -5,6 +5,7 @@ import com.kodilla.ecommercee.user.domain.User;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,8 +18,9 @@ import java.util.List;
 public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "CART_ID")
+    @Column(name = "CART_ID", unique = true)
     private Long cartId;
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "USER_ID")
     private User user;
