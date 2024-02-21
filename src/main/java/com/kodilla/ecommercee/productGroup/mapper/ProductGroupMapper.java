@@ -2,9 +2,9 @@ package com.kodilla.ecommercee.productGroup.mapper;
 
 import com.kodilla.ecommercee.productGroup.domain.ProductGroups;
 import com.kodilla.ecommercee.productGroup.domain.ProductGroupsDTO;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class ProductGroupMapper {
 
     public ProductGroups mapToProductGroups(final ProductGroupsDTO productGroupsDTO) {
