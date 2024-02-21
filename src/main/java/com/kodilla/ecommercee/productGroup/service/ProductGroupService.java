@@ -10,9 +10,10 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Service
 public class ProductGroupService {
+
     private final ProductGroupRepository productGroupRepository;
 
-    public List<ProductGroups> getAllProductGroups(){
+    public List<ProductGroups> getAllProductGroups() {
         return productGroupRepository.findAll();
     }
 

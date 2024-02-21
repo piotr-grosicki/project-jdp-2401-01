@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class OrderMapper {
-    public Order mapToOrder(OrderDto orderDto){
+    public Order mapToOrder(OrderDto orderDto) {
         return new Order(
                 orderDto.getOrderId(),
                 orderDto.getCart(),
@@ -17,14 +17,14 @@ public class OrderMapper {
                 orderDto.getValue());
     }
 
-    public OrderDto mapToOrderDto(Order order){
+    public OrderDto mapToOrderDto(Order order) {
         return new OrderDto(order.getOrderId(),
                 order.getUser(),
                 order.getCart(),
                 order.getOrderValue());
     }
 
-    public List<OrderDto> mapToOrderDtoList (List<Order> orderList){
+    public List<OrderDto> mapToOrderDtoList (List<Order> orderList) {
         return orderList.stream()
                 .map(this::mapToOrderDto)
                 .collect(Collectors.toList());

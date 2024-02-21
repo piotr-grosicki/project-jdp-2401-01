@@ -14,16 +14,19 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
 
-    public List<Order> getAllOrders(){return orderRepository.findAll();}
+    public List<Order> getAllOrders() {
+        return orderRepository.findAll();
+    }
+
     public Order getOrder(final long orderId) throws OrderNotFoundException {
         return orderRepository.findById(orderId).orElseThrow(OrderNotFoundException::new);
     }
 
-    public Order saveOrder(final Order order){
+    public Order saveOrder(final Order order) {
         return orderRepository.save(order);
     }
 
-    public void deleteOrder(final long orderId){
+    public void deleteOrder(final long orderId) {
         orderRepository.deleteById(orderId);
     }
 }

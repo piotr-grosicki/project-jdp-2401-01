@@ -21,12 +21,14 @@ import static org.junit.Assert.*;
 @Transactional
 @RunWith(SpringRunner.class)
 public class OrderEntityTestSuite {
+
     @Autowired
     private OrderRepository orderRepository;
     @Autowired
     private UserRepository userRepository;
     @Autowired
     private CartRepository cartRepository;
+
     @Test
     public void createOrderTest() {
         //Given
@@ -66,6 +68,7 @@ public class OrderEntityTestSuite {
         //Then
         assertEquals(0, orders.size());
     }
+
     @Test
     public void updateOrderTest() {
         //Given
@@ -79,8 +82,9 @@ public class OrderEntityTestSuite {
         //Cleanup
         orderRepository.deleteById(order.getOrderId());
     }
+
     @Test
-    public void orderRelationsTest(){
+    public void orderRelationsTest() {
         //Given
         User user = User.builder()
                 .carts(new ArrayList<>()).orders(new ArrayList<>()).build();

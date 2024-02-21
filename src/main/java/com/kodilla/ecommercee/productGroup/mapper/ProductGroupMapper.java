@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProductGroupMapper {
 
-    public ProductGroups mapToProductGroups(final ProductGroupsDTO productGroupsDTO){
+    public ProductGroups mapToProductGroups(final ProductGroupsDTO productGroupsDTO) {
         return ProductGroups.builder()
                 .id(productGroupsDTO.getId())
                 .name(productGroupsDTO.getName())
@@ -15,7 +15,7 @@ public class ProductGroupMapper {
                 .build();
     }
 
-    public ProductGroupsDTO mapToProductGroupDTO(final ProductGroups productGroups){
+    public ProductGroupsDTO mapToProductGroupDTO(final ProductGroups productGroups) {
         return new ProductGroupsDTO(
                 productGroups.getId(), productGroups.getName(), productGroups.getDescription()
         );
