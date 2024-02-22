@@ -13,8 +13,6 @@ import java.util.Optional;
 @Repository
 public interface CartRepository extends CrudRepository<Cart, Long> {
 
-    List<Product> findAllByCartId(Long cartId);
-
     Optional<Cart> findByCartId(Long cartId);
 
     @Override

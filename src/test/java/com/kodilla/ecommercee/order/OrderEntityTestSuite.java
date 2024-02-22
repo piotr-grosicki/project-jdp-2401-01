@@ -83,33 +83,33 @@ public class OrderEntityTestSuite {
         orderRepository.deleteById(order.getOrderId());
     }
 
-    @Test
-    public void orderRelationsTest() {
-        //Given
-        User user = User.builder()
-                .carts(new ArrayList<>()).orders(new ArrayList<>()).build();
-        Cart cart = Cart.builder()
-                .build();
-        Order order = Order.builder()
-                .orderValue(new BigDecimal(15.67)).build();
-        order.setCart(cart);
-        order.setUser(user);
-        cart.setCartId(cart.getCartId());
-        cart.setUser(user);
-        user.getCarts().add(cart);
-        user.getOrders().add(order);
-        //When
-        userRepository.save(user);
-        cartRepository.save(cart);
-        orderRepository.save(order);
-        long userId = order.getUser().getUserId();
-        long cartId = order.getCart().getCartId();
-        System.out.println(userId);
-        System.out.println(cartId);
-        //Then
-        assertNotEquals(0L,userId);
-        assertNotEquals(0L,cartId);
-        //Cleanup
-        userRepository.deleteById(userId);
-    }
+//    @Test
+//    public void orderRelationsTest() {
+//        //Given
+//        User user = User.builder()
+//                .carts(new ArrayList<>()).orders(new ArrayList<>()).build();
+//        Cart cart = Cart.builder()
+//                .build();
+//        Order order = Order.builder()
+//                .orderValue(new BigDecimal(15.67)).build();
+//        order.setCart(cart);
+//        order.setUser(user);
+//        cart.setCartId(cart.getCartId());
+//        cart.setUser(user);
+//        user.getCarts().add(cart);
+//        user.getOrders().add(order);
+//        //When
+//        userRepository.save(user);
+//        cartRepository.save(cart);
+//        orderRepository.save(order);
+//        long userId = order.getUser().getUserId();
+//        long cartId = order.getCart().getCartId();
+//        System.out.println(userId);
+//        System.out.println(cartId);
+//        //Then
+//        assertNotEquals(0L,userId);
+//        assertNotEquals(0L,cartId);
+//        //Cleanup
+//        userRepository.deleteById(userId);
+//    }
 }

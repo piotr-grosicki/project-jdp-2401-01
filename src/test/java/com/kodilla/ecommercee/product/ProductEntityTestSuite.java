@@ -7,6 +7,8 @@ import com.kodilla.ecommercee.product.repository.ProductRepository;
 import com.kodilla.ecommercee.productGroup.domain.ProductGroups;
 import com.kodilla.ecommercee.productGroup.repository.ProductGroupRepository;
 import com.kodilla.ecommercee.user.domain.User;
+import com.kodilla.ecommercee.user.domain.UserStatus;
+import com.kodilla.ecommercee.user.repository.UserRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,23 +34,19 @@ public class ProductEntityTestSuite {
     private ProductGroupRepository productGroupRepository;
     @Autowired
     private CartRepository cartRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @Test
     public void getListOfProducts() {
         //Given
-        ProductGroups group = ProductGroups.builder()
-                .name("Test group")
-                .description("Test description")
-                .products(new ArrayList<>())
-                .build();
-        Product product1 = Product.builder()
-                .name("test product1").price(new BigDecimal("11"))
+        ProductGroups group = ProductGroups.builder().name("Test group")
+                .description("Test description").products(new ArrayList<>()).build();
+        Product product1 = Product.builder().name("test product1").price(new BigDecimal("11"))
                 .carts(new ArrayList<>()).productGroups(group).build();
-        Product product2 = Product.builder()
-                .name("test product2").price(new BigDecimal("12"))
+        Product product2 = Product.builder().name("test product2").price(new BigDecimal("12"))
                 .carts(new ArrayList<>()).productGroups(group).build();
-        Product product3 = Product.builder()
-                .name("test product3").price(new BigDecimal("13"))
+        Product product3 = Product.builder().name("test product3").price(new BigDecimal("13"))
                 .carts(new ArrayList<>()).productGroups(group).build();
 
         group.getProducts().add(product1);
@@ -69,13 +67,9 @@ public class ProductEntityTestSuite {
     @Test
     public void testCreateAndGetProduct() {
         //Given
-        ProductGroups group = ProductGroups.builder()
-                .name("Test group")
-                .description("Test description")
-                .products(new ArrayList<>())
-                .build();
-        Product product1 = Product.builder()
-                .name("test product1").price(new BigDecimal("11"))
+        ProductGroups group = ProductGroups.builder().name("Test group")
+                .description("Test description").products(new ArrayList<>()).build();
+        Product product1 = Product.builder().name("test product1").price(new BigDecimal("11"))
                 .carts(new ArrayList<>()).productGroups(group).build();
         group.getProducts().add(product1);
 
@@ -92,13 +86,9 @@ public class ProductEntityTestSuite {
     @Test
     public void testDeletionOfProduct() {
         //Given
-        ProductGroups group = ProductGroups.builder()
-                .name("Test group")
-                .description("Test description")
-                .products(new ArrayList<>())
-                .build();
-        Product product1 = Product.builder()
-                .name("test product1").price(new BigDecimal("11"))
+        ProductGroups group = ProductGroups.builder().name("Test group")
+                .description("Test description").products(new ArrayList<>()).build();
+        Product product1 = Product.builder().name("test product1").price(new BigDecimal("11"))
                 .carts(new ArrayList<>()).productGroups(group).build();
         group.getProducts().add(product1);
         productGroupRepository.save(group);
@@ -114,13 +104,9 @@ public class ProductEntityTestSuite {
     @Test
     public void testChangeProduct() {
         //Given
-        ProductGroups group = ProductGroups.builder()
-                .name("Test group")
-                .description("Test description")
-                .products(new ArrayList<>())
-                .build();
-        Product product1 = Product.builder()
-                .name("test product1").price(new BigDecimal("11"))
+        ProductGroups group = ProductGroups.builder().name("Test group")
+                .description("Test description").products(new ArrayList<>()).build();
+        Product product1 = Product.builder().name("test product1").price(new BigDecimal("11"))
                 .carts(new ArrayList<>()).productGroups(group).build();
         group.getProducts().add(product1);
         productGroupRepository.save(group);
@@ -139,19 +125,16 @@ public class ProductEntityTestSuite {
         //Given
         ProductGroups testProductGroup = ProductGroups.builder()
                 .name("Test Group").description("Testing builder").products(new ArrayList<>()).build();
-        Product product1 = Product.builder()
-                .name("test product1").price(new BigDecimal("11"))
+        Product product1 = Product.builder().name("test product1").price(new BigDecimal("11"))
                 .carts(new ArrayList<>()).productGroups(testProductGroup).build();
-        Product product2 = Product.builder()
-                .name("test product2").price(new BigDecimal("12"))
+        Product product2 = Product.builder().name("test product2").price(new BigDecimal("12"))
                 .carts(new ArrayList<>()).productGroups(testProductGroup).build();
-        Product product3 = Product.builder()
-                .name("test product3").price(new BigDecimal("13"))
+        Product product3 = Product.builder().name("test product3").price(new BigDecimal("13"))
                 .carts(new ArrayList<>()).productGroups(testProductGroup).build();
-
         testProductGroup.getProducts().add(product1);
         testProductGroup.getProducts().add(product2);
         testProductGroup.getProducts().add(product3);
+        productGroupRepository.save(testProductGroup);
 
         List<Product> testList1 = new ArrayList<>();
         testList1.add(product1);
@@ -162,8 +145,12 @@ public class ProductEntityTestSuite {
         testList2.add(product3);
         testList2.add(product2);
 
-        Cart cart1 = Cart.builder().user(new User()).products(testList1).build();
-        Cart cart2 = Cart.builder().user(new User()).products(testList2).build();
+        User user = User.builder().username("Tim").password("12345").email("tim@gmail.com")
+                .statusEnum(UserStatus.ACTIVE).carts(new ArrayList<>()).build();
+        Cart cart1 = Cart.builder().user(user).products(testList1).build();
+        Cart cart2 = Cart.builder().user(user).products(testList2).build();
+        user.getCarts().add(cart1);
+        user.getCarts().add(cart2);
 
         product1.getCarts().add(cart1);
         product2.getCarts().add(cart1);
@@ -172,16 +159,20 @@ public class ProductEntityTestSuite {
         product3.getCarts().add(cart2);
 
         //When
-        productGroupRepository.save(testProductGroup);
-        cartRepository.save(cart1);
-        cartRepository.save(cart2);
+        userRepository.save(user);
+
+        Optional<Cart> optCart1 = cartRepository.findByCartId(cart1.getCartId());
+        List<Product> prodList1 = optCart1.map(Cart::getProducts).orElse(null);
 
         //Then
         assertNotEquals(0L, product1.getProductId());
         assertNotEquals(0L, testProductGroup.getId());
         assertNotEquals(0L, cart1.getCartId());
+        assertNotEquals(0L, cart2.getCartId());
         assertNotNull(productGroupRepository.findById(testProductGroup.getId()));
         assertNotNull(productRepository.findById(product2.getProductId()));
-        assertNotNull(cartRepository.findById(cart2.getCartId()));
+        assertNotNull(cartRepository.findByCartId(cart2.getCartId()));
+        assert prodList1 != null;
+        assertEquals(3, prodList1.size());
     }
 }

@@ -5,6 +5,7 @@ import com.kodilla.ecommercee.order.domain.Order;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,14 +21,19 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "USER_ID", unique = true)
     private Long userId;
+    @NotNull
     @Column(name = "USERNAME", unique = true)
     private String username;
+    @NotNull
     @Column(name = "PASSWORD", unique = true)
     private String password;
+    @NotNull
     @Column(name = "EMAIL", unique = true)
     private String email;
+    @NotNull
+    @Enumerated(EnumType.STRING)
     @Column(name ="STATUS")
-    private Enum<UserStatus> statusEnum;
+    private UserStatus statusEnum;
     @Column(name = "KEY_EXPIRATION_TIME")
     private LocalDateTime keyExpirationTime;
     @Column(name = "GENERATED_KEY")
